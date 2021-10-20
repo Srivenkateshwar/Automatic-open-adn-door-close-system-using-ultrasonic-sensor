@@ -1,0 +1,49 @@
+#include <Servo.h>  //Libraray of servo motor has been included
+
+
+const int trigPin=1;//Initalising
+const int echoPin=2;
+int buzzer=3;
+Servo servo_test;
+long duration;
+int distance;
+int objdetect=50;
+int flag;
+
+void setup()
+{
+  pinMode(buzzer, OUTPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  servo_test.attach(9);
+ 
+}
+
+
+
+void loop()
+{
+  digitalWrite(trigPin,LOW);//making trigpin low as first
+  delayMicroseconds(2);
+  
+  digitalWrite(trigPin, HIGH);//trigpin is set to high 
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);//trigpin is set low
+  
+  duration=pulseIn(echoPin, HIGH);//echo pin is set to high and value of echo pin is sent to duration
+  distance=(duration*0.034)/2;//formaula for calculating distance
+  
+  
+  if(distance<objdetect )//if loop is excuted
+  { servo_test.write(60);// setting up the servo  angle
+    digitalWrite(buzzer, HIGH);
+    delay(1000);
+  }
+  else
+  {
+    servo_test.write(0);
+    digitalWrite(buzzer, LOW);
+    delay(1000);
+    }  
+  delay(60);
+}
